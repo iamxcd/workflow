@@ -1,44 +1,85 @@
 <?php
 
-$order = [
+$config = [
     'marking_property' => 'status',
     'places' => [
-        'created' => [
-            'label' => '已创建'
+        'default' => [
+            'label' => '填写(修改)表单'
         ],
-        'paid' => [
-            'label' => '已支付'
+        'bmdsh' => [
+            'label' => '部门待审核'
         ],
-        'completed' => [
-            'label' => '已完成'
+        'bmsh' => [
+            'label' => '部门已审核'
         ],
-        'refunded' => [
-            'label' => '已退款'
+        'cwdsh' => [
+            'label' => '财务待审核'
+        ],
+        'cwsh' => [
+            'label' => '财务已审核'
+        ],
+        'lcwc' => [
+            'label' => '流程已完成'
         ],
     ],
     'transitions' => [
-        'to_pay' => [
-            'from' => 'created',
-            'to' => 'paid',
+        'xgbd' => [
+            'from' => 'default',
+            'to' => 'default',
             'meta' => [
-                'label' => '付款'
+                'label' => '修改表单'
             ]
         ],
-        'to_complete' => [
-            'from' => 'paid',
-            'to' => 'completed',
+        'tjbmsh' => [
+            'from' => 'default',
+            'to' => 'bmdsh',
             'meta' => [
-                'label' => '完成'
+                'label' => '提交审核'
             ]
         ],
-        'to_refund' => [
-            'from' => 'paid',
-            'to' => 'refunded',
+        'bmshtg' => [
+            'from' => 'bmdsh',
+            'to' => 'bmsh',
             'meta' => [
-                'label' => '退款'
+                'label' => '部门审核通过'
+            ]
+        ],
+        'bmshwtg' => [
+            'from' => 'bmdsh',
+            'to' => 'default',
+            'meta' => [
+                'label' => '部门审核未通过'
+            ]
+        ],
+        'tjcwsh' => [
+            'from' => 'bmsh',
+            'to' => 'cwdsh',
+            'meta' => [
+                'label' => '提交审核'
+            ]
+        ],
+        'cwshtg' => [
+            'from' => 'cwdsh',
+            'to' => 'cwsh',
+            'meta' => [
+                'label' => '财务审核通过'
+            ]
+        ],
+        'cwshwtg' => [
+            'from' => 'cwdsh',
+            'to' => 'default',
+            'meta' => [
+                'label' => '财务审核未通过'
+            ]
+        ],
+        'bxwc' => [
+            'from' => 'cwsh',
+            'to' => 'lcwc',
+            'meta' => [
+                'label' => '报销完成'
             ]
         ],
     ],
 ];
 
-return $order;
+return $config;

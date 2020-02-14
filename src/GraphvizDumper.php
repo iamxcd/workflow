@@ -113,8 +113,6 @@ class GraphvizDumper
             ];
             $i++;
         }
-
-        var_dump($dotEdges);
         return $dotEdges;
     }
 

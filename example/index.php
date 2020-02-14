@@ -35,7 +35,7 @@ $order = new class
 {
     public function getStatus()
     {
-        return 'created';
+        return '';
     }
 
     public function setStatus($status)
@@ -55,5 +55,5 @@ $order = new class
 
 // 下一步 有哪些
 foreach ($wf->next($order) as $step) {
-    echo  $step->getName() . ' ' . $step->getMeta()->getLabel() . PHP_EOL;
+    echo '状态码:' . $step->getName() . ' 操作:' . $step->getMeta()->getLabel() . PHP_EOL;
 }
