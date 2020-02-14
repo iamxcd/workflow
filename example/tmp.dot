@@ -1,0 +1,19 @@
+digraph workflow {
+  ratio="compress" rankdir="LR"
+  node [fontsize="9" fontname="SimSun" color="#333333" fillcolor="lightblue" fixedsize="false" width="1"];
+  edge [fontsize="9" fontname="SimSun" color="#333333" arrowhead="normal" arrowsize="0.5"];
+
+  place_21c50805b553b7a40e48394a5d77d442587ddee2 [label="已创建", shape=circle style="filled"];
+  place_9e1f1120d2eedc498808e1d855cfdbbd5564f22b [label="已支付", shape=circle style="filled"];
+  place_231e564db4cdb44a6545583a8d460edc7f9f97ca [label="已完成", shape=circle style="filled"];
+  place_a994ad4d435724c621cf03d9bbeb61bc270c6a82 [label="已退款", shape=circle style="filled"];
+  transition_b6589fc6ab0dc82cf12099d1c2d40ab994e8410c [label="付款", shape="box" regular="1"];
+  transition_356a192b7913b04c54574d18c28d46e6395428ab [label="完成", shape="box" regular="1"];
+  transition_da4b9237bacccdf19c0760cab7aec4a8359010b0 [label="退款", shape="box" regular="1"];
+  place_21c50805b553b7a40e48394a5d77d442587ddee2 -> transition_b6589fc6ab0dc82cf12099d1c2d40ab994e8410c [style="solid"];
+  transition_b6589fc6ab0dc82cf12099d1c2d40ab994e8410c -> place_9e1f1120d2eedc498808e1d855cfdbbd5564f22b [style="solid"];
+  place_9e1f1120d2eedc498808e1d855cfdbbd5564f22b -> transition_356a192b7913b04c54574d18c28d46e6395428ab [style="solid"];
+  transition_356a192b7913b04c54574d18c28d46e6395428ab -> place_231e564db4cdb44a6545583a8d460edc7f9f97ca [style="solid"];
+  place_9e1f1120d2eedc498808e1d855cfdbbd5564f22b -> transition_da4b9237bacccdf19c0760cab7aec4a8359010b0 [style="solid"];
+  transition_da4b9237bacccdf19c0760cab7aec4a8359010b0 -> place_a994ad4d435724c621cf03d9bbeb61bc270c6a82 [style="solid"];
+}

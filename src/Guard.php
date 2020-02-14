@@ -4,5 +4,4 @@ namespace Songbai\Workflow;
 
 class Guard
 {
-    
 }

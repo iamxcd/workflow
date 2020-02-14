@@ -1,4 +1,4 @@
-# 通用工作流模块
+# 工作流模块
 
 # 特性 ?
     1 先定义流程,以及步骤
@@ -9,4 +9,11 @@
     转换 transform
     守卫 Guard
 
-# 不特定框架 符合PSR规范都能用
+# 流程图
+    graphviz 下载 https://graphviz.gitlab.io/download/
+
+    $grap = new GraphvizDumper();
+    file_put_contents('tmp.dot', $grap->dump($def->build()));
+    dot -Tpng -o tmp.png tmp.dot
+# 参考
+    https://github.com/symfony/workflow
