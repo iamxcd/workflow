@@ -5,12 +5,14 @@ namespace Songbai\Workflow;
 class Workflow
 {
     private $definition;
+    private $guard;
     private $marking;
 
-    public function __construct(Definition $definition, Marking $marking)
+    public function __construct(Definition $definition, Marking $marking, Guard $guard)
     {
         $this->definition = $definition;
         $this->marking = $marking;
+        $this->guard = $guard;
     }
 
     public function can(object $object, string $transformName): bool
@@ -28,7 +30,11 @@ class Workflow
             if (!in_array($place, $transform->getFroms())) {
                 return false;
             }
-
+            $guardName = 'transform.' . $transform->getName() . '.can';
+            if ($this->guard->has($guardName)) {
+                $callback = $this->guard->get($guardName);
+                return (bool) $callback($object, $transform);
+            }
             # place
             return true;
         }
@@ -44,7 +50,20 @@ class Workflow
             throw new \Exception("不能设置:" . $transformName);
         }
         $transform = $this->definition->getTransition($transformName);
+
+        $guardName = 'transform.' . $transform->getName() . '.apply.before';
+        if ($this->guard->has($guardName)) {
+            $callback = $this->guard->get($guardName);
+            $callback($object, $transform);
+        }
+
         $this->marking->setMarking($object, $transform->getTo());
+
+        $guardName = 'transform.' . $transform->getName() . '.apply.after';
+        if ($this->guard->has($guardName)) {
+            $callback = $this->guard->get($guardName);
+            $callback($object, $transform);
+        }
     }
 
     /**

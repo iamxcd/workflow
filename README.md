@@ -1,13 +1,16 @@
 # 工作流模块
-
-# 特性 ?
-    1 先定义流程,以及步骤
-    2 使用者 只关心 下一步该做什么
     
 # 关键字
     位置 place
     转换 transform
     守卫 Guard
+# 守卫事件
+    目前就下面三个
+    'transition.转换名.' + 'can' or 'apply.before' or 'apply.before'
+
+    $guard->addGuard('to_pay', 'can', function (object $obj, $transform) {
+        return true;
+    });
 
 # 流程图
     graphviz 下载 https://graphviz.gitlab.io/download/

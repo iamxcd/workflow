@@ -6,6 +6,7 @@ $config = require  'config.php';
 
 use Songbai\Workflow\DefinitionBuilder;
 use Songbai\Workflow\GraphvizDumper;
+use Songbai\Workflow\Guard;
 use Songbai\Workflow\Marking;
 use Songbai\Workflow\Meta;
 use Songbai\Workflow\Transform;
@@ -22,7 +23,13 @@ foreach ($config['transitions'] as  $key => $val) {
     $def->addTransition(new Transform($key, $val['from'], $val['to'], new Meta($key, $val['meta']['label'])));
 }
 
-$wf = new Workflow($def->build(), new Marking($config['marking_property'], $places));
+$guard = new Guard();
+
+$guard->addGuard('to_pay', 'can', function (object $obj, $transform) {
+    return true;
+});
+
+$wf = new Workflow($def->build(), new Marking($config['marking_property'], $places), $guard);
 
 $order = new class
 {
@@ -37,11 +44,16 @@ $order = new class
     }
 };
 
-$grap = new GraphvizDumper();
-file_put_contents('tmp.dot', $grap->dump($def->build()));
+// $grap = new GraphvizDumper();
+// file_put_contents('tmp.dot', $grap->dump($def->build()));
 
-// var_dump($wf->can($order, 'to_pay'));
-// $wf->apply($order, 'to_pay');
+// if ($wf->can($order, 'to_pay')) {
+//     $wf->apply($order, 'to_pay');
+// } else {
+//     echo "执行 to_pay 失败";
+// }
 
 // 下一步 有哪些
-// var_dump($wf->next($order));
+foreach ($wf->next($order) as $step) {
+    echo  $step->getName() . ' ' . $step->getMeta()->getLabel() . PHP_EOL;
+}
