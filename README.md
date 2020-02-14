@@ -15,5 +15,8 @@
     $grap = new GraphvizDumper();
     file_put_contents('tmp.dot', $grap->dump($def->build()));
     dot -Tpng -o tmp.png tmp.dot
+
+![image](https://raw.githubusercontent.com/xiansongbai/workflow/master/example/tmp.png)
+
 # 参考
     https://github.com/symfony/workflow
